@@ -1,0 +1,15 @@
+#!/bin/sh
+
+if [ $(pacman -Qu | wc -l) -le 0 ]; then
+    # No update
+    exit 0
+fi
+
+# Count updates
+upn=$(pacman -Qu | wc -l)
+# Singular vs plural]
+sp=""
+if [ $upn -gt 1 ]; then
+    sp="S"
+fi
+echo [${upn} UPDATE${sp} AVAILABLE]

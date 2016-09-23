@@ -15,6 +15,7 @@
 use strict;
 use warnings;
 use utf8;
+use open ':std', ':encoding(UTF-8)';
 
 my $acpi;
 my $status;

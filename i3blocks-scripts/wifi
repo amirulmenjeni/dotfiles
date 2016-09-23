@@ -28,12 +28,17 @@ INTERFACE="${BLOCK_INSTANCE:-wlp6s0}"
 #------------------------------------------------------------------------
 
 # The connection quality(in percentage)
-QUALITY=$(nmcli -f SIGNAL d wifi | grep '[0-9]\{1,2\}' | awk 'NR==1')
+QUALITY=$(nmcli -f SIGNAL d wifi | grep '[0-9]\{1,2\}' | awk 'NR==1' | tr -d ' ')
 
 #------------------------------------------------------------------------
 
-echo $QUALITY% # full text
-echo $QUALITY% # short text
+# Get wifi name
+SSID=$(iwgetid -r)
+
+#------------------------------------------------------------------------
+
+echo $QUALITY% \| $SSID # full text
+echo $QUALITY% \| $SSID # short text
 
 # color
 if [[ $QUALITY -ge 80 ]]; then
