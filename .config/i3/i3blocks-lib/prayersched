@@ -1,0 +1,38 @@
+#!/bin/sh
+
+BLOCK_NAME="prayertimes"
+
+pname[0]="Fajr"
+pname[1]="Sunrise"
+pname[2]="Dhuhr"
+pname[3]="Asr"
+pname[4]="Sunset"
+pname[5]="Maghrib"
+pname[6]="Isha"
+pnlen=7
+
+# Using prayertimes to get the prayer time.
+for i in `seq 0 $((${pnlen} - 1))`;
+do
+	ptime[$i]=`prayertimes -c karachi -l 4.5353 -n 114.7277 | grep ${pname[$i]} | grep -o "[0-9]\{2\}\:[0-9]\{2\}"`
+done
+
+# First determine the system time.
+# Then determine what's next notification should be.
+# For example if Dhuhr is at 02:00 PM, and the system
+# time is at 01:00 PM, then notify only the Dhuhr time.
+ctime=`date "+%H%M"`
+for i in `seq 0 $((${pnlen} - 1))`;
+do
+	time=`echo ${ptime[$i]} | sed 's/://'`
+	if [ $time -ge $ctime ]; then
+	    nnext=${pname[$i]} # Name of next prayer time
+        tnext=${ptime[$i]} # Time of next prayer time
+        break
+	fi
+done
+
+full_text="${nnext}: ${tnext}"
+short_text="${nnext}: ${tnext}"
+echo $full_text
+echo $short_text
