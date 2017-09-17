@@ -1,2 +1,1 @@
-Put the config (found in each themes subdirectory), 
-launch.sh and pkg.sh in ~/.config/polybar.
+Copy all the contents of themes/my-theme/ into ~/.config/polybar.

@@ -42,8 +42,8 @@ bindsym $mod+d exec rofi -show run
 # installed.
 # bindsym $mod+d exec --no-startup-id i3-dmenu-desktop
 
-# i3lock
-bindsym $mod+l exec --no-startup-id i3lock-fancy -d -f Anonymous-Pro-for-Powerline
+# i3lock screen lock
+bindsym $mod+l exec lock -p -t "Y O U R    P A S S    P L I S" 
 
 # start wallpaper
 exec --no-startup-id nitrogen --restore
@@ -195,7 +195,7 @@ bindsym $mod+equal        exec xmms2 server volume $(($(xmms2 server volume | gr
 bindsym $mod+i            exec sh ~/.config/i3/script/toggle_repeat_one_xmms2.sh
 
 # Taking screenshot
-bindsym Print exec gnome-screenshot
+bindsym $mod+Print exec spectacle
 
 # resize window (you can also use the mouse for that)
 mode "resize" {
@@ -223,9 +223,10 @@ mode "resize" {
 
 bindsym $mod+r mode "resize"
 
+# Gaps
 for_window [class="^.*"] border pixel 5
-gaps inner 15
-gaps outer 10
+# gaps inner 15
+# gaps outer 10
 
 # window decoration
 #class                  #border #bg     #text   #indicator  #child_border
@@ -241,8 +242,8 @@ client.background       #00FF00
 # Start i3bar to display a workspace bar (plus the system information i3status
 # finds out, if available)
 bar {
-	# allow use of RGBA color
-	i3bar_command i3bar -t
+    # allow use of RGBA color
+    i3bar_command i3bar -t
 
     # custom status separator
     separator_symbol "  "
@@ -251,8 +252,8 @@ bar {
 	status_command i3blocks -c ~/.config/i3/i3blocks.conf
 	position top
 	height 25
-	colors {                #BORDER     #BACKGROUND     #TEXT
-		background                      #00000000  
+	colors {            #BORDER     #BACKGROUND     #TEXT
+	background                      #272423EE  
         active_workspace    #FFFFFF50   #FFFFFFFF       #FF0000FF
         focused_workspace   #FFFFFFF0   #FFFFFF50       #FFFFFFFF
         inactive_workspace  #FFFFFF50   #FFFFFF50       #FFFFFFFF
@@ -260,3 +261,5 @@ bar {
     }
 
 }
+
+
