@@ -124,6 +124,9 @@ nnoremap ts  :Tabsplit<Space>
 " Tagbar "
 nnoremap TT  :TagbarToggle<CR>
 
+" NERD Tree
+nnoremap NT  :NERDTreeToggle<CR>
+
 "Buftabs navigation and shortcuts"
 nnoremap <F1>  :bprev<CR>
 nnoremap <F2>  :bnext<CR>
