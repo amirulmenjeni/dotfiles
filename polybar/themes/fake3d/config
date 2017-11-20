@@ -9,7 +9,7 @@
 
 [colors]
 ;background = ${xrdb:color0:#222}
-background = #00000000
+background = #00
 background-alt = #4a4a4b
 ;foreground = ${xrdb:color7:#222}
 foreground = #c9d2e7
@@ -52,6 +52,9 @@ pkgfg-prefix = #f8ff1d
 emailbg = #ce4220
 emailfg = #ddcdc9
 emailul = #7f223e
+iconbg = #2a269c
+iconfg = #cdcde3
+iconul = #242084
 primary = #ffb52a
 secondary = #e60053
 alert = #bd2c40
@@ -85,13 +88,12 @@ module-margin-right = 0
 
 ;font-0 = Gohu GohuFont:size=9
 ;font-1 = unifont:fontformat=truetype:size=8:antialias=false;0
-;font-2 = "Wuncon Siji:pixelsize=4;2"
+;font-2 = "Wuncon Siji:pixelsize=4;0"
 ;font-3 = fontawesome:pixelsize=9
 font-0=Gohu GohuFont:pixelsize=10;0
-font-1=UW ttyp0:pixelsize=10;0
-font-2=WunconSiji:size=4;0
+font-1=WunconSiji:size=4;0
 
-modules-left = custom-icon padding i3 xwindow
+modules-left = custom-icon i3 padding xwindow
 modules-center = 
 modules-right = xkeyboard padding email padding pkg padding volume padding network padding battery padding date padding
 
@@ -116,7 +118,10 @@ content = " "
 [module/custom-icon]
 type = custom/text
 content = 
-format-padding-right = 4
+content-background = ${colors.iconbg}
+content-foreground = ${colors.iconfg}
+content-underline = ${colors.iconul}
+content-padding = 1
 
 [module/xwindow]
 type = internal/xwindow
@@ -265,7 +270,7 @@ label-connected = %essid%
 
 format-disconnected = <label-disconnected>
 format-disconnected-underline = ${self.format-connected-underline}
-label-disconnected = :(
+label-disconnected = offline
 label-disconnected-foreground = ${colors.foreground-alt}
 
 ramp-signal-0 = 
@@ -310,9 +315,10 @@ format-connected-foreground = ${colors.netfg}
 format-connected-underline = ${colors.netul}
 format-connected-padding = 0
 
-label-disconnected = :(
+label-disconnected = offline
 label-disconnected-background = ${colors.netbg}
 label-disconnected-foreground = ${colors.netfg}
+label-disconnected-underline = ${colors.netul}
 label-disconnected-padding = 1
 
 format-disconnected = <label-disconnected>
