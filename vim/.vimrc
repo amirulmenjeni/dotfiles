@@ -40,8 +40,13 @@ Plugin 'Eraden/glfw.vim'
 Plugin 'scrooloose/nerdtree'
 Plugin 'jiangmiao/auto-pairs'
 Plugin 'mkitt/tabline.vim'
-Plugin 'kien/ctrlp.vim'
-Plugin 'vim-scripts/buftabs'
+Plugin 'dpelle/vim-LanguageTool'
+Plugin 'vim-scripts/Tagbar'
+Plugin 'nathanaelkane/vim-indent-guides'
+Plugin 'vim-airline/vim-airline'
+Plugin 'vim-airline/vim-airline-themes'
+Plugin 'bling/vim-bufferline'
+Plugin 'ctrlpvim/ctrlp.vim'
 
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
@@ -116,6 +121,9 @@ nnoremap tm  :tabm<Space>
 nnoremap td  :tabclose<CR>
 nnoremap ts  :Tabsplit<Space>
 
+" Tagbar "
+nnoremap TT  :TagbarToggle<CR>
+
 "Buftabs navigation and shortcuts"
 nnoremap <F1>  :bprev<CR>
 nnoremap <F2>  :bnext<CR>
@@ -123,7 +131,7 @@ nnoremap <F2>  :bnext<CR>
 " vimtex "
 nnoremap vc   :VimtexCompile<CR>
 nnoremap vs   :VimtexCompileSelected<CR>
-nnoremap ve   :VimtexErrors<CR>
+nnoremap vr   :VimtexErrors<CR>
 
 "Commenting in block"
 "For # comment character:
@@ -144,3 +152,21 @@ if !exists('g:ycm_semantic_triggers')
     let g:ycm_semantic_triggers = {}
 endif
 let g:ycm_semantic_triggers.tex = g:vimtex#re#youcompleteme
+
+"**************************************************
+" vimtex
+"**************************************************
+let g:vimtex_view_general_viewer = "evince"
+
+"**************************************************
+" vim-LanguageTool
+"**************************************************
+let g:languagetool_jar='$HOME/.vim/bundle/vim-LanguageTool/LanguageTool-3.9/languagetool-commandline.jar'
+set spelllang='en_us'
+hi LanguageToolSpellingError guisp=red  gui=undercurl guifg=NONE guibg=NONE ctermfg=white ctermbg=red  term=underline cterm=none
+
+"**************************************************
+" vim-airline-themes
+"**************************************************
+let g:airline_powerline_fonts = 1
+let g:airline_theme='base16'
