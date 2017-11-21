@@ -1,0 +1,98 @@
+## ~lovelybacon.deviantart.com
+##  modified by chriptik.deviantart.com
+
+# Window geometry
+padding.width: 5
+border.width: 0
+window.client.padding.width: 0
+window.client.padding.height: 0
+window.handle.width: 0
+
+#Menu geometry
+menu.border.width: 10
+menu.overlap: 0
+
+# Border colors 77b4e0 68696b
+window.active.border.color: #799984
+window.inactive.border.color: #799984
+menu.border.color: #799984
+
+# Window title justification
+window.label.text.justify: left
+
+# Active window
+window.active.title.bg: Flat Solid
+window.active.title.bg.color: #799984
+window.active.label.bg: Parentrelative
+window.active.label.text.color: #799984
+
+window.active.button.unpressed.bg: Flat Solid
+window.active.button.unpressed.bg.color: #799984
+window.active.button.unpressed.image.color: #ffffff
+
+window.active.button.pressed.bg: Flat Solid
+window.active.button.pressed.bg.color: #799984
+window.active.button.pressed.image.color: #799984
+
+window.active.button.disabled.bg: Flat Solid
+window.active.button.disabled.bg.color: #799984
+window.active.button.disabled.image.color: #799984
+
+window.active.button.toggled.bg: Flat Solid
+window.active.button.toggled.bg.color: #799984
+window.active.button.toggled.image.color: #799984
+
+window.active.button.hover.bg: Flat Solid
+window.active.button.hover.bg.color: #799984
+window.active.button.hover.image.color: #ffffff
+
+# Inactive windows
+window.inactive.title.bg: Flat Solid
+window.inactive.title.bg.color: #799984
+window.inactive.label.bg: Parentrelative
+window.inactive.label.text.color: #799984
+
+window.inactive.button.unpressed.bg: Flat Solid
+window.inactive.button.unpressed.bg.color: #799984
+window.inactive.button.unpressed.image.color: #799984
+
+window.inactive.button.pressed.bg: Flat Solid
+window.inactive.button.pressed.bg.color: #799984
+window.inactive.button.pressed.image.color: #799984
+
+window.inactive.button.disabled.bg: Flat Solid
+window.inactive.button.disabled.bg.color: #799984
+window.inactive.button.disabled.image.color: #799984
+
+window.inactive.button.toggled.bg: Flat Solid
+window.inactive.button.toggled.bg.color: #799984
+window.inactive.button.toggled.image.color: #799984
+
+window.inactive.button.hover.bg: Flat Solid
+window.inactive.button.hover.bg.color: #799984
+window.inactive.button.hover.image.color: #799984
+
+# Menus
+menu.title.bg: Flat Solid
+menu.title.bg.color: #799984
+menu.title.text.color: #ffffff
+menu.title.text.justify: Left
+
+menu.items.bg: Flat Solid
+menu.items.bg.color: #799984
+menu.items.text.color: #ffffff
+menu.items.disabled.text.color: #999
+
+menu.items.active.bg: Flat Solid
+menu.items.active.bg.color: #799984
+menu.items.active.text.color: #fff
+menu.items.active.disabled.text.color: #999
+
+#osd
+osd.border.width: 2
+osd.border.color: #799984
+osd.bg: flat border vertical
+osd.bg.color: #EEEEEE
+osd.bg.border.color: #EEEEEE
+osd.label.bg: parentrelative
+osd.label.text.color: #799984
