@@ -441,7 +441,7 @@ format-full-prefix-foreground = ${colors.batfg}
 ramp-capacity-0 = " "
 ramp-capacity-1 = " "
 ramp-capacity-2 = " "
-ramp-capacity-foreground = ${colors.foreground-alt}
+ramp-capacity-foreground = ${colors.batfg}
 
 animation-charging-0 = 
 animation-charging-1 = 
