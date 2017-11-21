@@ -45,7 +45,6 @@ Plugin 'vim-scripts/Tagbar'
 Plugin 'nathanaelkane/vim-indent-guides'
 Plugin 'vim-airline/vim-airline'
 Plugin 'vim-airline/vim-airline-themes'
-Plugin 'bling/vim-bufferline'
 Plugin 'ctrlpvim/ctrlp.vim'
 
 " All of your Plugins must be added before the following line
@@ -124,6 +123,9 @@ nnoremap ts  :Tabsplit<Space>
 " Tagbar "
 nnoremap TT  :TagbarToggle<CR>
 
+" NERD Tree
+nnoremap NT  :NERDTreeToggle<CR>
+
 "Buftabs navigation and shortcuts"
 nnoremap <F1>  :bprev<CR>
 nnoremap <F2>  :bnext<CR>
@@ -140,7 +142,6 @@ vnoremap <silent> -# :s/^#//<cr>:noh<cr>
 "For // comment character:
 vnoremap <silent> // :s/^/\/\//<cr>:noh<cr>
 vnoremap <silent> -// :s/^\/\///<cr>:noh<cr>
-
 
 "**************************************************
 " YouCompleteMe
@@ -166,7 +167,17 @@ set spelllang='en_us'
 hi LanguageToolSpellingError guisp=red  gui=undercurl guifg=NONE guibg=NONE ctermfg=white ctermbg=red  term=underline cterm=none
 
 "**************************************************
+" vim-airline
+"**************************************************
+let g:airline_extensions = ['tabline']
+
+"**************************************************
 " vim-airline-themes
 "**************************************************
 let g:airline_powerline_fonts = 1
-let g:airline_theme='base16'
+let g:airline_theme='deus'
+
+"**************************************************
+" tabline
+"**************************************************
+let g:tablineclosebutton = 0
