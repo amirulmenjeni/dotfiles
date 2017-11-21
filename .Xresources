@@ -1,4 +1,4 @@
-#include "/home/amenji/.config/urxvt/themes/Grayscale Light"
+#include "/home/amenji/git/dotfiles/urxvt/themes/s3r0-modified"
 ! ------------------------------------------------------------------------------
 ! Use extended color scheme
 rofi.color-enabled:                  true
@@ -32,8 +32,8 @@ rofi.fuzzy:             true
 ! URXVT
 ! ------------------------------------------------------------------------------
 URxvt.scrollBar:        false
-URxvt.font:             xft:Gohu GohuFont:size=10
-URxvt.perl-ext-common:         default,matcher,vtwheel,clipboard
+URxvt.font:             xft:Gohu GohuFont:size=10,xft:xos4 Terminess Powerline:sie=10,xft:Wuncon Siji
+URxvt.perl-ext-common:  default,matcher,vtwheel,clipboard
 URxvt.url-launcher:     /usr/bin/firefox
 URxvt.internalBorder:   4
 URxvt.matcher.rend.0:   Uline Bold fg5
