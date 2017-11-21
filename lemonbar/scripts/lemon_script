@@ -1,0 +1,91 @@
+#!/usr/bin/bash
+
+# Define the clock
+clock() 
+{
+        color_bg='#5294E2'
+        color_fg='#FFFFFF'
+        date_time=$(date "+\uf073  %A, %B %d, %Y  \uf017  %r")
+        echo -e -n "%{B${color_bg}}%{F${color_fg}}  $date_time  %{F-}%{B-}"
+}
+
+# Volume
+# Allow the user to hover the volume area and scroll up/down to
+# adjust the volume.
+volume()
+{
+        label='\uf028'
+        control_id=$(amixer get Master | grep -oE ",[0,-9]" | cut -c 2-)
+        vol_up="pactl set-sink-volume $control_id +5%"
+        vol_dn="pactl set-sink-volume $control_id -5%"
+        vol=$(amixer get Master | grep -oE "([0-9]{0,3})%" | head -n1)
+        echo -n "%{A4:${vol_up}:}%{A5:${vol_dn}:} ${label}  ${vol} %{A}%{A}"
+}
+
+# i3 workspaces
+# Shows the open workspaces (focused and unfocused) on the left hand side
+# of the bar. The current focused workspace is highlighted.
+workspace()
+{
+        highlight_bg='#953121'
+        highlight_fg='#FFFFFF'
+        current=$(i3-msg -t get_workspaces | jq '.[] | select(.focused==true).name' | sed -r 's/\"//g')
+        workspaces=""
+        for name in $(i3-msg -t get_workspaces | jq '.[] | .name' | sed -r 's/\"//g'); do
+                tmp=$name
+                if [ $current == $name ]; then
+                        tmp="%{B${highlight_bg}}%{F${highlight_fg}}   ${name}   %{F-}%{B-}"
+                fi
+                workspaces="${workspaces} ${tmp}" 
+        done
+        echo -n "\uf108   ${workspaces}"
+}
+
+# Exit -- logout
+# Exit button for logging the user out.
+exit_logout()
+{
+        color_bg='#C0392B'
+        color_fg='#FFFFFF'
+        label='\uf007'
+        echo -n "%{B${color_bg}}%{F${color_fg}}%{A:pkill -u ${USER}:}   ${label}   %{A}%{F-}%{B-}"
+}
+
+# Exit -- shut down
+# Exit button for shutting down the computer.
+exit_shutdown()
+{
+        color_bg='#A93226'
+        color_fg='#FFFFFF'
+        label='\uf011'
+        echo -n "%{B${color_bg}}%{F${color_fg}}%{A:shutdown -t:}   ${label}   %{A}%{F-}%{B-}"
+}
+
+iface()
+{       
+        label='%{F#2E86C1}\uf0ac%{F-}'
+        color_fg='#2E8449'
+        interface='wlp6s0'
+        name='[Eth]'
+        ip_regex='inet ((25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)'
+        if [ "${interface:0:1}" == "w" ]; then
+                name="[$(iw dev $interface info | grep -oE "ssid (.*)" | cut -c 6-)]"
+                ip=$(ifconfig $interface | grep -oE "$ip_regex" | cut -c 6-)
+        elif [ "${interface:0:1}" == "e" ]; then
+                name='[Ethe]'\
+                ip=$(ifconfig $interface | grep -oE "$ip_regex" | cut -c 6-)
+        else
+                name='<Unavailable>'
+                ip=''        
+        fi 
+        echo -n "${label}  %{F${color_fg}}${name} $ip%{F-}"
+}
+
+# Echo, to be piped to lemonbar.
+# Allow lemonbar to detect scrolling in to
+# switch workplace
+while true; do
+        echo -e "%{l} $(workspace)"\
+                "%{c} $(clock)"\
+                "%{r} $(iface)  $(volume)  $(exit_logout)$(exit_shutdown)"
+done

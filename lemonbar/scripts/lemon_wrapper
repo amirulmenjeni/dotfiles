@@ -1,0 +1,34 @@
+#!/bin/bash
+
+# i3-bar should be running to make space for lemonbar.
+# This is a hack so that the windows doesn't overlap 
+# with lemonbar.
+
+# SETTINGS
+x_offset=0
+y_offset=0
+bg_color='#FFFFFF'    # Background - Color format AARRGGBB
+fg_color='#000000'
+
+# Input for the -g option of lemonbar.
+# $w is the width of the lemonbar
+# $h is the height of the lemonbar
+# $x is the x position of the lemonbar 
+# $y is the y position of the lemonbar
+w=$(xdpyinfo | grep dimensions | grep -oE "([0-9]{3,4})x" | rev | cut -c 2- | rev | head -1)
+w=$(( $w-2*$x_offset ))
+h=25
+x=$x_offset
+y=$y_offset
+
+echo "w: '$w'"
+echo "h: '$h'"
+echo "x: '$x'"
+echo "y: '$y'"
+
+sh ~/scripts/lemonbar/lemon_script | lemonbar -d -g ${w}x${h}+${x}+${y} \
+                                              -B ${bg_color} -F ${fg_color} \
+                                              -f "Font Awesome" -f "Ubuntu Mono" \
+                                   | sh       # STDOUT output is run as sh
+
+xdo above -t $(xwininfo -root -children | egrep -o "0x[[:xdigit:]]+" | tail -1) $(xdo id -a lemonbar)

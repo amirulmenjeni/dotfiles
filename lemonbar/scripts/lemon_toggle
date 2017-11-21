@@ -1,0 +1,11 @@
+#!/bin/bash
+
+# Toggle lemonbar. If it's running, shut it. Otherwise,
+# run it.
+
+if pgrep -x "lemonbar" > /dev/null
+then
+        killall lemonbar 
+else
+        sh ~/scripts/lemonbar/lemon_wrapper
+fi
