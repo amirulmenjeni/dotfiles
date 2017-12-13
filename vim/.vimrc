@@ -30,8 +30,11 @@ Plugin 'VundleVim/Vundle.vim'
 " different version somewhere else.
 "  Plugin 'ascenator/L9', {'name': 'newL9'}
 
+"##################################################
+" Plugins
+"##################################################
 Plugin 'arrufat/vala.vim'
-"Plugin 'Valloric/YouCompleteMe' (use pacaur -S vim-youcompleteme-git instead)
+Plugin 'Valloric/YouCompleteMe'
 Plugin 'lervag/vimtex'
 Plugin 'nickhutchinson/vim-cmake-syntax'
 Plugin 'tikhomirov/vim-glsl'
@@ -46,6 +49,8 @@ Plugin 'nathanaelkane/vim-indent-guides'
 Plugin 'vim-airline/vim-airline'
 Plugin 'vim-airline/vim-airline-themes'
 Plugin 'ctrlpvim/ctrlp.vim'
+Plugin 'davidhalter/jedi-vim'
+Plugin 'terryma/vim-smooth-scroll'
 
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
@@ -84,7 +89,7 @@ let g:vimtex_compiler_latexmk = {'callback' : 0}
 let g:vimtex_view_general_viewer = 'okular'
 let g:vimtex_view_general_options = '--unique file:@pdf\#src:@line@tex'
 let g:vimtex_view_general_options_latexmk = '--unique'
-" END OF PREFERENCES
+:colorscheme elflord
 
 "**************************************************
 " KEY MAPPINGS
@@ -137,13 +142,19 @@ nnoremap vr   :VimtexErrors<CR>
 
 "Commenting in block"
 "For # comment character:
-vnoremap <silent> # :s/^/#/<cr>:noh<cr>
-vnoremap <silent> -# :s/^#//<cr>:noh<cr>
+vnoremap <silent> # :s/^/# /<cr>:noh<cr>
+vnoremap <silent> -# :s/^# //<cr>:noh<cr>
 "For // comment character:
-vnoremap <silent> // :s/^/\/\//<cr>:noh<cr>
-vnoremap <silent> -// :s/^\/\///<cr>:noh<cr>
+vnoremap <silent> // :s/^/\/\/ /<cr>:noh<cr>
+vnoremap <silent> -// :s/^\/\/ //<cr>:noh<cr>
 
-"**************************************************
+" Vim smooth scrolls "
+noremap <silent> <c-u> :call smooth_scroll#up(&scroll, 0, 2)<CR>
+noremap <silent> <c-d> :call smooth_scroll#down(&scroll, 0, 2)<CR>
+noremap <silent> <c-b> :call smooth_scroll#up(&scroll*2, 0, 4)<CR>
+noremap <silent> <c-f> :call smooth_scroll#down(&scroll*2, 0, 4)<CR>
+
+"***************************************************
 " YouCompleteMe
 "*******g*******************************************
 let g:ycm_server_python_interpreter = "/usr/bin/python2"
@@ -153,6 +164,9 @@ if !exists('g:ycm_semantic_triggers')
     let g:ycm_semantic_triggers = {}
 endif
 let g:ycm_semantic_triggers.tex = g:vimtex#re#youcompleteme
+let g:ycm_confirm_extra_conf = 0
+let g:ycm_server_keep_logfiles = 1
+let g:ycm_server_log_level = 'debug'
 
 "**************************************************
 " vimtex
@@ -181,3 +195,8 @@ let g:airline_theme='deus'
 " tabline
 "**************************************************
 let g:tablineclosebutton = 0
+
+"**************************************************
+" jedi-vim
+"**************************************************
+let g:jedi#documentation_command = "<C-k>"

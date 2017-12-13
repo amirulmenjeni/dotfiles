@@ -9,7 +9,7 @@
 
 [colors]
 ;background = ${xrdb:color0:#222}
-background = #e1ddbb
+background = #f5f5d8
 background-alt = #f8fffe
 ;foreground = ${xrdb:color7:#222}
 foreground = #000
@@ -51,7 +51,7 @@ font-2 = "Wuncon Siji:pixelsize=9;1"
 
 modules-left = icon i3 xwindow
 modules-center = 
-modules-right = xkeyboard volume pkg network battery date
+modules-right = xkeyboard vpn volume pkg network battery date
 
 tray-padding = 2
 tray-transparent = true
@@ -241,12 +241,12 @@ label-disconnected-padding = 1
 format-disconnected = <label-disconnected>
 format-disconnected-padding = 0
 
-ramp-signal-0 = " "
-ramp-signal-1 = " "
-ramp-signal-2 = " "
-ramp-signal-3 = " "
-ramp-signal-4 = " "
-ramp-signal-5 = " "
+ramp-signal-0 = ""
+ramp-signal-1 = ""
+ramp-signal-2 = ""
+ramp-signal-3 = ""
+ramp-signal-4 = ""
+ramp-signal-5 = ""
 
 ; Test connectivity every Nth update.
 ; A value of 0 disables this feature.
@@ -294,6 +294,9 @@ ramp-volume-1 = 
 ramp-volume-2 = 
 ramp-volume-padding = 1
 
+ramp-headphones-0 = a
+ramp-headphones-1 = b
+
 [module/battery]
 type = internal/battery
 battery = BAT0
@@ -314,9 +317,9 @@ format-discharging-padding = 0
 
 format-full-prefix = " "
 
-ramp-capacity-0 = " "
-ramp-capacity-1 = " "
-ramp-capacity-2 = " "
+ramp-capacity-0 = ""
+ramp-capacity-1 = ""
+ramp-capacity-2 = ""
 
 animation-charging-0 = 
 animation-charging-1 = 
@@ -396,6 +399,14 @@ label = %output:0:30%
 exec = python ~/.config/polybar/email.py
 exec-if = "ping -q -w 2 -c 1 176.34.135.167 > /dev/null"
 click-left = firefox --new-tab https://www.gmail.com
+
+[module/vpn]
+type = custom/script
+format = <label>
+label = %output:0:30%
+exec = sh ~/.config/polybar/vpn.sh
+click-left = sh ~/.config/polybar/toggle-vpn.sh
+
 
 [settings]
 screenchange-reload = true

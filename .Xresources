@@ -1,42 +1,11 @@
-#include "/home/amenji/git/dotfiles/urxvt/themes/s3r0-modified"
-! ------------------------------------------------------------------------------
-! Use extended color scheme
-rofi.color-enabled:                  true
-
-!                                    bg      fg      bgalt   hlbg    hlfg
-! Color scheme for normal row
-rofi.color-normal:                   #393939,#ffffff,#393939,#711c33,#ffffff
-! Color scheme for urgent row
-rofi.color-urgent:                   #393939,#f3843d,#393939,#711c33,#ffc39c
-! Color scheme for active row
-rofi.color-active:                   #393939,#268bd2,#393939,#711c33,#205171
-! Color scheme window
-rofi.color-window:                   #393939,#393939,#268bd2
-! Separator style (none, dash, solid)
-rofi.separator-style:                dash
-
-!rofi.sidebar-mode:      true
-rofi.font:              Gohu GohuFont 10
-rofi.hide-scrollbar:    true
-rofi.show-icons:        true
-rofi.drun-icon-theme:   Paper
-rofi.dpi:               96
-rofi.location:          0
-rofi.xoffset:           0
-rofi.yoffset:           0
-rofi.width:             50
-rofi.bw:                0
-rofi.fuzzy:             true
-
+#include "/home/amenji/git/dotfiles/urxvt/themes/Batman"
 ! ------------------------------------------------------------------------------
 ! URXVT
 ! ------------------------------------------------------------------------------
 URxvt.scrollBar:        false
-URxvt.font:             xft:Gohu GohuFont:size=10,xft:xos4 Terminess Powerline:sie=10,xft:Wuncon Siji
+URxvt.font:             xft:Dina:size=9, xft:xos4 Terminess Powerline
 URxvt.perl-ext-common:  default,matcher,vtwheel,clipboard
 URxvt.url-launcher:     /usr/bin/firefox
 URxvt.internalBorder:   4
 URxvt.matcher.rend.0:   Uline Bold fg5
 URxvt.matcher.button:   1
-
-
