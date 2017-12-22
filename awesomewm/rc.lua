@@ -127,8 +127,8 @@ awful.util.taglist_buttons = awful.util.table.join(
                                                   client.focus:toggle_tag(t)
                                               end
                                           end),
-                    awful.button({ }, 4, function(t) awful.tag.viewnext(t.screen) end),
-                    awful.button({ }, 5, function(t) awful.tag.viewprev(t.screen) end)
+                    awful.button({ }, 4, function(t) awful.tag.viewprev(t.screen) end),
+                    awful.button({ }, 5, function(t) awful.tag.viewnext(t.screen) end)
                 )
 awful.util.tasklist_buttons = awful.util.table.join(
                      awful.button({ }, 1, function (c)
@@ -188,17 +188,6 @@ local myawesomemenu = {
     { "restart", awesome.restart },
     { "quit", function() awesome.quit() end }
 }
---awful.util.mymainmenu = freedesktop.menu.build({
---    icon_size = beautiful.menu_height or 16,
---    before = {
---        { "Awesome", myawesomemenu, beautiful.awesome_icon },
---        -- other triads can be put here
---    },
---    after = {
---        { "Open terminal", terminal },
---        -- other triads can be put here
---    }
---})
 
 local mymediamenu = {
     { "music", terminal .. " -e cmus" },
@@ -208,18 +197,52 @@ local mymediamenu = {
 local myinternetmenu = {
     { "firefox", "firefox" },
     { "weechat", terminal .. " -e weechat" },
-    { "whatsie", "whatsie" }
+    { "whatsie", "whatsie" },
+    { "gmail", "chromium --app=https://gmail.com" },
+    { "hangout", "chromium --app=https://hangout.google.com" },
+    { "netflix", "chromium --app=https://netflix.com" },
+}
+
+local mygamemenu = {
+    { "steam", "steam-time" },
+    { "retroarch", "retroarch" },
+    { "lutris", "lutris" },
+    { "playonlinux", "playonlinux" },
+    { "more...", gui_fmgr .. " games"},
+}
+
+local myscimenu = {
+    { "calculator", "speedcrunch" },
+    { "smartsim", "smartsim" },
+}
+
+local mysysmenu = {
+    { "lxappearance", "lxappearance" },
+    { "pulse audio", "pavucontrol" },
+}
+
+local myexitmenu = {
+    { "logout", "kill -9 -1" },
+    { "shutdown", "poweroff" },
+    { "reboot", "reboot" }
 }
 
 awful.util.mymainmenu = awful.menu({
     items = {
         { "awesome", myawesomemenu },
+        { "exits", myexitmenu },
         { "media", mymediamenu },
+        { "games", mygamemenu },
         { "internet", myinternetmenu },
+        { "science", myscimenu },
+        { "system", mysysmenu },
         { "files", gui_fmgr },
-        { "open terminal", terminal }
+        { "open terminal", terminal },
+        { "close", function() awful.util.mymainmenu:hide() end },
     }
 })
+
+awful.client.cycle(true)
 
 --menubar.utils.terminal = terminal -- Set the Menubar terminal for applications that require it
 -- }}}
@@ -244,8 +267,8 @@ awful.screen.connect_for_each_screen(function(s) beautiful.at_screen_connect(s) 
 -- {{{ Mouse bindings
 root.buttons(awful.util.table.join(
     awful.button({ }, 3, function () awful.util.mymainmenu:toggle() end),
-    awful.button({ }, 4, awful.tag.viewnext),
-    awful.button({ }, 5, awful.tag.viewprev)
+    awful.button({ }, 4, awful.tag.viewprev),
+    awful.button({ }, 5, awful.tag.viewnext)
 ))
 -- }}}
 
@@ -266,12 +289,6 @@ globalkeys = awful.util.table.join(
               {description = "view next", group = "tag"}),
     awful.key({ modkey,           }, "Escape", awful.tag.history.restore,
               {description = "go back", group = "tag"}),
-
-    -- Non-empty tag browsing
-    awful.key({ altkey }, "Left", function () lain.util.tag_view_nonempty(-1) end,
-              {description = "view  previous nonempty", group = "tag"}),
-    awful.key({ altkey }, "Right", function () lain.util.tag_view_nonempty(1) end,
-              {description = "view  previous nonempty", group = "tag"}),
 
     -- Default client focus
     awful.key({ altkey,           }, "j",
@@ -662,8 +679,8 @@ awful.rules.rules = {
     { rule = { class = "Firefox" },
       properties = { screen = 1, tag = awful.util.tagnames[1] } },
 
-    { rule = { class = "Gimp", role = "gimp-image-window" },
-          properties = { maximized = true } },
+--    { rule = { class = "Gimp", role = "gimp-image-window" },
+--          properties = { maximized = true } },
 }
 -- }}}
 

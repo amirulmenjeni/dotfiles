@@ -37,7 +37,7 @@ floating_modifier $mod
 exec_always --no-startup-id $HOME/.config/polybar/launch.sh
 
 # low batt notification
-exec --no-startup-id $HOME/scripts/notifications/low-battery.sh 15
+# exec --no-startup-id $HOME/scripts/notifications/low-battery.sh 15
 
 # compositor
 exec --no-startup-id compton --config ~/.config/compton/compton.conf

@@ -3,9 +3,10 @@
 ! URXVT
 ! ------------------------------------------------------------------------------
 URxvt.scrollBar:        false
-URxvt.font:             xft:Dina:size=9, xft:xos4 Terminess Powerline
-URxvt.perl-ext-common:  default,matcher,vtwheel,clipboard
+URxvt.font:             xft:lucy tewii:size=10, xft:xos4 Terminess Powerline, -wuncon-siji-medium-r-normal--10-100-75-75-c-80-iso10646-1
+URxvt.perl-ext-common:  default,matcher,clipboard
 URxvt.url-launcher:     /usr/bin/firefox
 URxvt.internalBorder:   4
 URxvt.matcher.rend.0:   Uline Bold fg5
 URxvt.matcher.button:   1
+URxvt.letterSpace:      0

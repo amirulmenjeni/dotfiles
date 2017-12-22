@@ -7,8 +7,10 @@
 
 local gears   = require("gears")
 local lain    = require("lain")
+local naughty = require("naughty")
 local awful   = require("awful")
 local wibox   = require("wibox")
+local vici    = require("vicious")
 local os      = { getenv = os.getenv }
 
 local theme                                     = {}
@@ -76,8 +78,12 @@ local white      = theme.fg_focus
 local gray       = "#858585"
 
 -- Textclock
-local mytextclock = wibox.widget.textclock(markup(gray, " %a")
-.. markup(white, " %d ") .. markup(gray, "%b ") ..  markup(white, "%I:%M %p"))
+local mytextclock = wibox.widget.textclock(
+    markup(gray, "<span font='Wuncon Siji'></span> %a") .. 
+    markup(white, " %d ") .. 
+    markup(gray, "%b ") ..  
+    markup(white, "%I:%M %p")
+)
 mytextclock.font = theme.font
 
 -- Calendar
@@ -140,20 +146,56 @@ theme.fs = lain.widget.fs({
         fs_p      = ""
 
         if tonumber(fs_now.used) >= 90 then
-            fs_header = " Hdd "
+            fs_header = "Hdd "
             fs_p      = fs_now.used
         end
 
-        widget:set_markup(markup.font(theme.font, markup(gray, fs_header) .. markup(white, fs_p)))
+        widget:set_markup(markup.font(theme.font, 
+            markup(gray, fs_header) .. 
+            markup(white, fs_p)
+        ))
     end
 })
 
 -- Battery
 local bat = lain.widget.bat({
+    timeout = 2,
     settings = function()
-        bat_header = " Bat "
-        bat_p      = bat_now.perc .. " "
-        widget:set_markup(markup.font(theme.font, markup(gray, bat_header) .. markup(white, bat_p)))
+        bat_p      = tonumber(bat_now.perc)
+        status     = bat_now.status -- "Discharging", "Charging", "Full"
+
+        if status == "Discharging" then
+            if bat_p <= 10 then
+                bat_header = "" --e242
+            elseif bat_p <= 20 then
+                bat_header = ""
+            elseif bat_p <= 30 then
+                bat_header = ""
+            elseif bat_p <= 40 then
+                bat_header = ""
+            elseif bat_p <= 50 then
+                bat_header = ""
+            elseif bat_p <= 60 then
+                bat_header = ""
+            elseif bat_p <= 70 then
+                bat_header = ""
+            elseif bat_p <= 80 then
+                bat_header = ""
+            elseif bat_p <= 90 then
+                bat_header = ""
+            elseif bat_p <= 100 then
+                bat_header = ""
+            end
+        elseif status == "Charging" then
+            bat_header = ""
+        elseif status == "Full" then
+            bat_header = ""
+        end
+
+        widget:set_markup(markup.font(theme.font, 
+            markup(gray, "<span font='Wuncon Siji'>" .. bat_header .. "</span> ") .. 
+            markup(white, bat_p .. " ") 
+        ))
     end
 })
 
@@ -161,16 +203,25 @@ local bat = lain.widget.bat({
 theme.volume = lain.widget.alsa({
     --togglechannel = "IEC958,3",
     settings = function()
-        header = " Vol "
-        vlevel  = volume_now.level
+        header = "Vol "
+        vol    = tonumber(volume_now.level)
 
         if volume_now.status == "off" then
-            vlevel = vlevel .. "M "
+            vol = "M"
+            header = ""
         else
-            vlevel = vlevel .. " "
+            if vol == 0 then
+                header = ""
+            else
+                header = ""
+            end
         end
 
-        widget:set_markup(markup.font(theme.font, markup(gray, header) .. markup(white, vlevel)))
+
+        widget:set_markup(markup.font(theme.font, 
+            markup(gray, "<span font='Wuncon Siji'>" .. header .. "</span> ") .. 
+            markup(white, vol .. " ")
+        ))
     end
 })
 
@@ -183,25 +234,100 @@ theme.weather = lain.widget.weather({
 -- CPU
 local cpu = lain.widget.cpu({
     settings = function()
-        cpu_header = " CPU "
+        cpu_header = "<span font='Wuncon Siji'></span> "
         cpu_p = cpu_now.usage .. " "
-        widget:set_markup(markup.font(theme.font, markup(gray, cpu_header) .. markup(white, cpu_p)))
+        widget:set_markup(markup.font(theme.font, 
+            markup(gray, cpu_header) .. 
+            markup(white, cpu_p)
+        ))
     end
 })
 
 -- Memory
 local mem = lain.widget.mem({
     settings = function()
-        mem_header = " MEM "
+        mem_header = "<span font='Wuncon Siji'></span> "
         mem_p = mem_now.perc .. " "
-        widget:set_markup(markup.font(theme.font, markup(gray, mem_header) .. markup(white, mem_p)))
+        widget:set_markup(markup.font(theme.font, 
+            markup(gray, mem_header) ..
+            markup(white, mem_p)
+        ))
     end
 })
+
+-- Menu
+local menu = wibox.widget.textbox(
+    "<span font='Wuncon Siji'></span> "
+)
+
+menu:connect_signal("mouse::enter", function(c)
+    c.markup = "<span font='Wuncon Siji' color='white'></span> "
+end)
+
+menu:connect_signal("mouse::leave", function(c)
+    c.markup = "<span font='Wuncon Siji'></span> "
+end)
+
+menu:connect_signal("button::release", function(c)
+    awful.util.mymainmenu:toggle()
+end)
+
+-- nmcli
+local nmcli_widget = awful.widget.watch(
+    { awful.util.shell, "-c", "nmcli -g ACTIVE,IN-USE,DEVICE,SSID,SIGNAL dev wifi" }, 2, 
+      function(widget, stdout) 
+        local wifi_now = {}
+    
+        -- Wifi is connected using an nmcli profile if a
+        -- row in the stdout list with "yes" in the ACTIVE column.
+        -- Only one connection may be active at a time.
+        if stdout:match("(yes): ?*?:") then
+            wifi_now.status = "connected"
+        else
+            wifi_now.status = "disconnected"
+        end
+
+        -- If no nmcli connection is active, display the top connection
+        -- from the list, which have the highest signal strength. Otherwise,
+        -- show the information from the active connection.
+        if wifi_now.status == "disconnected" then
+            wifi_now.device = stdout:match("^.-:.-:(.-):") or "N/A"
+            wifi_now.ssid   = stdout:match("^.-:.-:.-:(.-):") or "N/A"
+            wifi_now.signal = stdout:match("^.-:.-:.-:.-:(%d+)") or "N/A"
+        else
+            wifi_now.device = stdout:match("yes:%*:(.-):") or "N/A"
+            wifi_now.ssid   = stdout:match("yes:%*:.-:(.-):") or "N/A"
+            wifi_now.signal = stdout:match("yes:%*:.-:.-:(%d+)") or "N/A"
+        end
+
+        -- Use icon to show the signal.
+        local signal_label = ""
+        local signal_num = tonumber(wifi_now.signal)
+        if signal_num <= 20 then
+            signal_label = ""
+        elseif signal_num <= 40 then
+            signal_label = ""
+        elseif signal_num <= 60 then
+            signal_label = ""
+        elseif signal_num <= 80 then
+            signal_label = ""
+        else
+            signal_label = ""
+        end
+
+        -- customize here
+        widget:set_markup(markup.font(theme.font, 
+            markup(white, "<span font='Wuncon Siji'>" .. signal_label .. "</span> ") ..
+            markup(gray, wifi_now.ssid .. " ")
+        ))
+    end
+)
 
 -- Separators
 local first     = wibox.widget.textbox('<span font="Misc Tamsyn 4"> </span>')
 local arrl_pre  = separators.arrow_right("alpha", "#1A1A1A")
 local arrl_post = separators.arrow_right("#1A1A1A", "alpha")
+local pad       = wibox.widget.textbox(" ")
 
 function theme.at_screen_connect(s)
     -- Quake application
@@ -246,6 +372,8 @@ function theme.at_screen_connect(s)
     s.mywibox:setup {
         layout = wibox.layout.align.horizontal,
         { -- Left widgets
+            pad,
+            menu,
             layout = wibox.layout.fixed.horizontal,
             first,
             s.mytaglist,
@@ -259,13 +387,15 @@ function theme.at_screen_connect(s)
         { -- Right widgets
             layout = wibox.layout.fixed.horizontal,
             wibox.widget.systray(),
+            pad,
             first,
-            theme.fs.widget,
+            nmcli_widget,
             cpu.widget,
             mem.widget,
             bat.widget,
             theme.volume.widget,
             mytextclock,
+            pad,
         },
     }
 end
