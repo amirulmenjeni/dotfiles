@@ -214,11 +214,13 @@ local mygamemenu = {
 local myscimenu = {
     { "calculator", "speedcrunch" },
     { "smartsim", "smartsim" },
+    { "logisim", "logisim" },
 }
 
 local mysysmenu = {
-    { "lxappearance", "lxappearance" },
+    { "appearance", "lxappearance" },
     { "pulse audio", "pavucontrol" },
+    { "task manager", "lxtask" },
 }
 
 local myexitmenu = {
@@ -378,8 +380,6 @@ globalkeys = awful.util.table.join(
               {description = "move tag to the left", group = "tag"}),
     awful.key({ modkey, "Shift" }, "Right", function () lain.util.move_tag(1) end,
               {description = "move tag to the right", group = "tag"}),
-    awful.key({ modkey, "Shift" }, "d", function () lain.util.delete_tag() end,
-              {description = "delete tag", group = "tag"}),
 
     -- Standard program
     awful.key({ modkey,           }, "Return", function () awful.spawn(terminal) end,
@@ -388,8 +388,10 @@ globalkeys = awful.util.table.join(
               {description = "reload awesome", group = "awesome"}),
     awful.key({ modkey, "Shift"   }, "e", awesome.quit,
               {description = "quit awesome", group = "awesome"}),
-    awful.key({ modkey }, "d", function() awful.spawn.with_shell("rofi -show drun") end,
-              {description = "run rofi", group = ""}),
+    awful.key({ modkey }, "d", function() awful.spawn.with_shell("rofi -show drun -display-drun Program -display-run Run") end,
+              {description = "run rofi (drun mode)", group = "launcher"}),
+    awful.key({ modkey, "Shift" }, "d", function() awful.spawn.with_shell("rofi -show run -display-drun Program -display-run Run") end,
+              {description = "run rofi (run mode)", group = "launcher"}),
 
     awful.key({ altkey, "Shift"   }, "l",     function () awful.tag.incmwfact( 0.05)          end,
               {description = "increase master width factor", group = "layout"}),
