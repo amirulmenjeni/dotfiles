@@ -33,6 +33,10 @@ floating_modifier $mod
 # Autostarts 
 ################################################################################
 
+# scripts
+exec --no-startup-id $HOME/scripts/init/startup_trackpoint.sh
+exec --no-startup-id $HOME/scripts/init/startup_touchpad.sh
+
 # polybar
 exec_always --no-startup-id $HOME/.config/polybar/launch.sh
 
@@ -43,14 +47,14 @@ exec_always --no-startup-id $HOME/.config/polybar/launch.sh
 exec --no-startup-id compton --config ~/.config/compton/compton.conf
 
 # start wallpaper
-exec_always feh --bg-fill $HOME/pictures/wallpapers/current_wallpaper
+exec_always feh --bg-fill $HOME/Pictures/.current_wallpaper
 
 # script that switche to blurred wallpaper counterpart when at least
 # a window is opened
 exec --no-startup-id ~/scripts/cron-jobs/blur-bg.sh
 
-# start goldendict
-exec --no-startup-id goldendict
+# redshift
+exec --no-startup-id redshift &
 
 ################################################################################
 
@@ -64,7 +68,7 @@ bindsym $mod+c exec termite -e "cmus"
 bindsym $mod+Shift+q kill
 
 # Start rofi (a program launcher)
-bindsym $mod+d exec rofi -pid $HOME/.tmp/rofi-pid -show drun
+bindsym $mod+d exec rofi -modi drun -show drun
 bindsym $mod+Shift+d exec rofi $HOME/.tmp/rofi-pid -show run
 bindsym $mod+Shift+w exec rofi $HOME/.tmp/rofi-pid -show window
 
@@ -202,8 +206,8 @@ bindsym XF86AudioLowerVolume exec pactl set-sink-volume 0 -5%  $update #decrease
 bindsym XF86AudioMute        exec pactl set-sink-mute 1 toggle $update # mute sound
 
 # Brightness control
-bindsym XF86MonBrightnessUp   exec light -A 1 
-bindsym XF86MonBrightnessDown exec light -U 1
+bindsym XF86MonBrightnessUp   exec light -A 5 
+bindsym XF86MonBrightnessDown exec light -U 5
  
 bindsym --release Caps_Lock exec pkill -SIGRTMIN+11 i3blocks
 bindsym --release Num_Lock  exec pkill -SIGRTMIN+11 i3blocks
@@ -213,8 +217,8 @@ bindsym Print exec "scrot ~/pictures/screenshots/scrot-%Y-%m-%d-%H-%M-%S.png"
 bindsym $mod+Print exec "scrot -u ~/pictures/screenshots/scrot-%Y-%m-%d-%H-%M-%S.png"
 bindsym $mod+Shift_L+Print exec "scrot -s ~/pictures/screenshots/scrot-%Y-%m-%d-%H-%M-%S.png"
 
-# Open nautilus
-bindsym $mod+n exec nautilus
+# Open file manager
+bindsym $mod+n exec urxvt -e ranger 
 
 # xkill
 bindsym $mod+Delete exec xkill

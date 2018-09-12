@@ -9,7 +9,7 @@
 
 [colors]
 ;background = ${xrdb:color0:#222}
-background = #eef6f5
+background = #f5f5d8
 background-alt = #f8fffe
 ;foreground = ${xrdb:color7:#222}
 foreground = #000
@@ -21,7 +21,7 @@ alert = #bd2c40
 [bar/main]
 ;monitor = ${env:MONITOR:DisplayPort-0}
 width = 100%
-height = 40
+height = 25
 offset-x = 0%
 offset-y = 0%
 radius = 0
@@ -30,7 +30,7 @@ fixed-center = true
 background = ${colors.background}
 foreground = ${colors.foreground}
 
-dim-value = 0.8
+dim-value = 1
 
 line-size = 3
 line-color = #f00
@@ -39,20 +39,19 @@ border-size = 0
 border-bottom-size = 0
 border-color = #00000000
 
-padding-left = 3
-padding-right = 3
+padding-left = 1
+padding-right = 0
 
-module-margin-left = 2
-module-margin-right = 2
+module-margin-left = 1
+module-margin-right = 0
 
-font-0 = xos4 Terminus:pixelsize=10;1
+font-0 = Gohu GohuFont:pixelsize=9;1
 font-1 = unifont:fontformat=truetype:size=8:antialias=false;0
-font-2 = "Wuncon Siji:pixelsize=10;1"
-font-3 = fontawesome:pixelsize=13
+font-2 = "Wuncon Siji:pixelsize=9;1"
 
-modules-left = i3
+modules-left = icon i3 xwindow
 modules-center = 
-modules-right = xkeyboard filesystem volume pkg eth cpu memory date
+modules-right = xkeyboard volume network bat0 bat1 date
 
 tray-padding = 2
 tray-transparent = true
@@ -67,6 +66,10 @@ tray-offset-y = 1400 # Monitor height - bar height
 
 scroll-up = i3wm-wsnext
 scroll-down = i3wm-wsprev
+
+[module/icon]
+type = custom/text
+content = 
 
 [module/xwindow]
 type = internal/xwindow
@@ -128,32 +131,31 @@ strip-wsnumbers = false
 ; Only show workspaces on the same output as the bar
 pin-workspaces = true
 
-label-mode-padding = 0
-label-mode-foreground = #000
-label-mode-background = ${colors.primary}
+label-mode-padding = 1
+label-mode-foreground = ${colors.background}
+label-mode-background = ${colors.foreground}
 
 ; focused = Active workspace on focused monitor
 label-focused = %icon%
-label-focused-background = ${module/bspwm.label-focused-background}
-;label-focused-underline = ${module/bspwm.label-focused-underline}
-label-focused-padding = ${module/bspwm.label-focused-padding}
+label-focused-background = #1a1a1d
+label-focused-foreground = ${colors.background}
+label-focused-padding = 1
 
 ; unfocused = Inactive workspace on any monitor
 label-unfocused = %icon%
-label-unfocused-padding = ${module/bspwm.label-occupied-padding}
+label-unfocused-padding = 1
 
 ; visible = Active workspace on unfocused monitor
 label-visible = %icon%
 label-visible-background = ${self.label-focused-background}
-;label-visible-underline = ${self.label-focused-underline}
-label-visible-padding = ${self.label-focused-padding}
+label-visible-padding = 1
 
 ; urgent = Workspace with urgency hint set
 label-urgent = %icon%
 label-urgent-background = ${module/bspwm.label-urgent-background}
-label-urgent-padding = ${module/bspwm.label-urgent-padding}
+label-urgent-padding = 1
 
-ws-icon-default = <?>
+ws-icon-default = ?
 ws-icon-0 = 0;0
 ws-icon-1 = 1;1
 ws-icon-2 = 2;2
@@ -219,122 +221,138 @@ format-prefix = " "
 format-prefix-foreground = ${colors.foreground}
 label = %percentage_used%%
 
-[module/wlan]
+[module/network]
 type = internal/network
-interface = 
-interval = 3.0
+interface = wlp3s0
 
-format-connected = <ramp-signal> <label-connected>
-format-connected-underline = #9f78e1
+; Seconds to sleep between updates.
+; Default: 1
+interval = 1
+
 label-connected = %essid%
+label-connected-padding = 1
 
-format-disconnected =
-;format-disconnected = <label-disconnected>
-;format-disconnected-underline = ${self.format-connected-underline}
-;label-disconnected = %ifname% disconnected
-;label-disconnected-foreground = ${colors.foreground-alt}
+format-connected = <ramp-signal><label-connected>
+format-connected-padding = 0
 
-ramp-signal-0 = 
-ramp-signal-1 = 
-ramp-signal-2 = 
-ramp-signal-3 = 
-ramp-signal-4 = 
-ramp-signal-foreground = ${colors.foreground-alt}
+label-disconnected = offline
+label-disconnected-padding = 1
 
-[module/eth]
-type = internal/network
-interface = wlp6s0
-interval = 3.0
+format-disconnected = <label-disconnected>
+format-disconnected-padding = 0
 
-format-connected-prefix = " "
-format-connected-prefix-foreground = ${colors.foreground-alt}
-label-connected = %local_ip%
+ramp-signal-0 = ""
+ramp-signal-1 = ""
+ramp-signal-2 = ""
+ramp-signal-3 = ""
+ramp-signal-4 = ""
+ramp-signal-5 = ""
 
-format-disconnected =
-;format-disconnected = <label-disconnected>
-;format-disconnected-underline = ${self.format-connected-underline}
-;label-disconnected = %ifname% disconnected
-;label-disconnected-foreground = ${colors.foreground-alt}
+; Test connectivity every Nth update.
+; A value of 0 disables this feature.
+; NOTE: Experimental (needs more testing).
+; Default: 0
+; ping-interval = 3
+
+; @deprecated: Define min width using token specifiers 
+; (%downspeed:min% and %upspeed:min%)
+; Minimum output width of upload/download rate.
+; Default: 3
+; udspeed-minwidth = 5
+
+; Accumulate values from all interfaces
+; when querying for up/downspeed rate.
+; Default: false
+accumulate-stats = true
 
 [module/date]
 type = internal/date
 interval = 1
 
-date = %Y, %B %d
-date-alt = 
-
+date = %a %b %d
 time = %r
-time-alt =
-
-format-prefix = "  "
-format-prefix-foreground = ${colors.foreground}
-;format-underline = #0a6cf5
 
 label = %date%, %time%
+format-background = #417aa1
+format-foreground = #bbe3de
+format-padding = 1
 
 [module/volume]
 type = internal/volume
 
-;format-volume = <label-volume> <bar-volume>
-format-volume = <label-volume> <bar-volume> 
-;label-volume = VOL
-;label-volume-foreground = ${root.foreground}
+format-volume = <ramp-volume><label-volume>
+format-volume-padding = 0
+format-muted-foreground = #303028
 
-format-muted-prefix = "  "
-format-muted-foreground = ${colors.foreground-alt}
-label-volume = 
-label-muted = Muted
-label-muted-foreground = #66
+label-volume = %percentage:0:3%
+label-muted =  MUTED
+label-muted-padding = 1
+label-volume-padding = 1
 
-bar-volume-width = 10
-bar-volume-foreground-0 = #55aa55
-bar-volume-foreground-1 = #55aa55
-bar-volume-foreground-2 = #55aa55
-bar-volume-foreground-3 = #55aa55
-bar-volume-foreground-4 = #55aa55
-bar-volume-foreground-5 = #f5a70a
-bar-volume-foreground-6 = #ff5555
-bar-volume-gradient = false
-bar-volume-indicator = |
-bar-volume-indicator-font = 2
-bar-volume-fill = ─
-bar-volume-fill-font = 2
-bar-volume-empty = ─
-bar-volume-empty-font = 2
-bar-volume-empty-foreground = ${colors.foreground}
+ramp-volume-0 = 
+ramp-volume-1 = 
+ramp-volume-2 = 
+ramp-volume-padding = 1
 
-ramp-volume-0 = 🔈
-ramp-volume-1 = 🔉
-ramp-volume-2 = 🔊
+ramp-headphones-0 = a
+ramp-headphones-1 = b
 
-ramp-headphones-0 = 
-ramp-headphones-1 = 
-
-[module/battery]
+[module/bat0]
 type = internal/battery
 battery = BAT0
 adapter = AC0
 full-at = 98
 
-format-charging = <animation-charging> <label-charging>
-format-charging-underline = #ffb52a
+label-discharging = %percentage%
+label-discharging-padding = 1
+
+label-charging = %percentage%
+label-charging-padding = 1
+
+format-charging = <label-charging>
+format-charging-prefix = " "
 
 format-discharging = <ramp-capacity> <label-discharging>
-format-discharging-underline = ${self.format-charging-underline}
+format-discharging-padding = 0
 
-format-full-prefix = " "
-format-full-prefix-foreground = ${colors.foreground-alt}
-format-full-underline = ${self.format-charging-underline}
+format-full-prefix = " "
 
-ramp-capacity-0 = 
-ramp-capacity-1 = 
-ramp-capacity-2 = 
-ramp-capacity-foreground = ${colors.foreground-alt}
+ramp-capacity-0 = ""
+ramp-capacity-1 = ""
+ramp-capacity-2 = ""
 
-animation-charging-0 = 
-animation-charging-1 = 
-animation-charging-2 = 
-animation-charging-foreground = ${colors.foreground-alt}
+animation-charging-0 = 
+animation-charging-1 = 
+animation-charging-2 = 
+animation-charging-framerate = 750
+
+[module/bat1]
+type = internal/battery
+battery = BAT1
+adapter = AC1
+full-at = 98
+
+label-discharging = %percentage%
+label-discharging-padding = 1
+
+label-charging = %percentage%
+label-charging-padding = 1
+
+format-charging = <label-charging>
+format-charging-prefix = " "
+
+format-discharging = <ramp-capacity> <label-discharging>
+format-discharging-padding = 0
+
+format-full-prefix = " "
+
+ramp-capacity-0 = ""
+ramp-capacity-1 = ""
+ramp-capacity-2 = ""
+
+animation-charging-0 = 
+animation-charging-1 = 
+animation-charging-2 = 
 animation-charging-framerate = 750
 
 [module/temperature]
@@ -394,9 +412,30 @@ menu-0-2-exec = systemctl poweroff
 type = custom/script
 interval = 1200
 format = <label>
+format-prefix = ""
 label = "%output:0:30%"
+label-padding = 1
 exec = ~/.config/polybar/pkg.sh
 exec-if = "ping -q -w 2 -c 1 176.34.135.167 > /dev/null"
+
+[module/email]
+type = custom/script
+interval = 120
+format = <label>
+format-prefix = " "
+label-padding = 1
+label = %output:0:30%
+exec = python ~/.config/polybar/email.py
+exec-if = "ping -q -w 2 -c 1 176.34.135.167 > /dev/null"
+click-left = firefox --new-tab https://www.gmail.com
+
+[module/vpn]
+type = custom/script
+format = <label>
+label = %output:0:30%
+exec = sh ~/.config/polybar/vpn.sh
+click-left = sh ~/.config/polybar/toggle-vpn.sh
+
 
 [settings]
 screenchange-reload = true
