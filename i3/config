@@ -251,8 +251,8 @@ bindsym $mod+r mode "resize"
 
 # Gaps
 for_window [class="^.*"] border pixel 3
-gaps inner 10
-gaps outer 5
+gaps inner 0
+gaps outer 0
 
 # Auto float
 for_window [class="VeraCrypt"] floating enable
