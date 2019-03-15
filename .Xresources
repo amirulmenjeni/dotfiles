@@ -1,12 +1,63 @@
-#include "/home/amenji/git/dotfiles/urxvt/themes/Batman"
-! ------------------------------------------------------------------------------
-! URXVT
-! ------------------------------------------------------------------------------
-URxvt.scrollBar:        false
-URxvt.font:             xft:lucy tewii:size=10, xft:xos4 Terminess Powerline, -wuncon-siji-medium-r-normal--10-100-75-75-c-80-iso10646-1
-URxvt.perl-ext-common:  default,matcher,clipboard
-URxvt.url-launcher:     /usr/bin/firefox
-URxvt.internalBorder:   4
-URxvt.matcher.rend.0:   Uline Bold fg5
-URxvt.matcher.button:   1
-URxvt.letterSpace:      0
+! special
+*.foreground:   #c5c8c6
+*.background:   #1d1f21
+*.cursorColor:  #c5c8c6
+
+! black
+*.color0:       #282a2e
+*.color8:       #373b41
+
+! red
+*.color1:       #a54242
+*.color9:       #cc6666
+
+! green
+*.color2:       #8c9440
+*.color10:      #b5bd68
+
+! yellow
+*.color3:       #de935f
+*.color11:      #f0c674
+
+! blue
+*.color4:       #5f819d
+*.color12:      #81a2be
+
+! magenta
+*.color5:       #85678f
+*.color13:      #b294bb
+
+! cyan
+*.color6:       #5e8d87
+*.color14:      #8abeb7
+
+! white
+*.color7:       #707880
+*.color15:      #c5c8c6
+
+
+
+
+
+!! URXVT  SETTINGS !!
+URxvt.scrollBar: false
+!! URxvt.font:	 xft:Hack:size=10
+!! URxvt.font:	 xft:ProFont for Powerline:pixelsize=16
+!! URxvt.font: xft:Dejavu Sans Mono for Powerline:size=10
+!! URxvt.font: xft:Liberation Mono:size=10
+!! URxvt.font: xft:Inconsolata for Powerline
+!! URxvt.font: xft:xos4 Terminus:size=10
+!! URxvt.font: xft:Anonymous Pro for Powerline:size=10
+URxvt.font: xft:Iosevka Medium:size=10,xft:Wuncon Siji:size=10
+!! URxvt.letterSpace: 2
+URxvt.internalBorder: 12
+
+!! Clickable URL
+URxvt.perl-ext-common: default,matcher
+URxvt.url-launcher:    /usr/bin/qutebrowser
+URxvt.matcher.button: 1
+
+!! ROFI !!
+rofi.font: Ubuntu Light 10
+
+weechat*iconFile: /home/amenji/.local/share/icons/chat_icon.svg
