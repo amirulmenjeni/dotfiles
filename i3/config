@@ -73,7 +73,7 @@ bindsym $mod+Shift+d exec rofi $HOME/.tmp/rofi-pid -show run
 bindsym $mod+Shift+w exec rofi $HOME/.tmp/rofi-pid -show window
 
 # Dictionary.
-bindsym Mod1+d exec urxvt -name "sdcv" -e sdcv
+bindsym Mod1+d exec urxvt -name "sdcv" -e sdcv --color
 
 # i3lock screen lock
 set $date $(date "+%d.%m.%Y")
