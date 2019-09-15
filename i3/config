@@ -40,6 +40,9 @@ exec --no-startup-id $HOME/scripts/init/startup_touchpad.sh
 # polybar
 exec_always --no-startup-id $HOME/.config/polybar/launch.sh
 
+# kde connect
+exec --no-startup-id /usr/lib/kdeconnectd
+
 # low batt notification
 # exec --no-startup-id $HOME/scripts/notifications/low-battery.sh 15
 
@@ -51,7 +54,7 @@ exec_always feh --bg-fill $HOME/Pictures/.current_wallpaper
 
 # script that switche to blurred wallpaper counterpart when at least
 # a window is opened
-exec --no-startup-id ~/scripts/cron-jobs/blur-bg.sh
+# exec --no-startup-id ~/scripts/cron-jobs/blur-bg.sh
 
 # redshift
 exec --no-startup-id redshift &
