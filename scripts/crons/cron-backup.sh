@@ -22,3 +22,4 @@ bkp b ~/Documents/ubd /ubd
 bkp b ~/Documents/studies /studies
 bkp b ~/Documents/career /career
 bkp b ~/Documents/books /books
+bkp b ~/Music /Music
