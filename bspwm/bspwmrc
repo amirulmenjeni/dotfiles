@@ -1,0 +1,35 @@
+#! /bin/sh
+
+bspc monitor -d web code code book chat media game
+
+bspc config border_width         3
+bspc config window_gap          12
+
+bspc config focused_border_color  "#ffffcc"
+
+bspc config split_ratio          0.52
+bspc config borderless_monocle   true
+bspc config gapless_monocle      true
+
+bspc rule -a Gimp desktop='^8' state=floating follow=on
+bspc rule -a Chromium desktop='^2'
+bspc rule -a mplayer2 state=floating
+bspc rule -a Kupfer.py focus=on
+bspc rule -a Screenkey manage=off
+bspc rule -a Zathura state=tiled
+bspc rule -a URxvt:ranger state=floating
+bspc rule -a URxvt:sdcv state=floating
+bspc rule -a URxvt:ncmpcpp state=floating
+
+##################################################
+# Autostarts
+##################################################
+
+sxhkd &
+sh $HOME/scripts/init/startup_touchpad.sh
+sh $HOME/scripts/init/startup_trackpoint.sh
+sh $HOME/.config/polybar/launch.sh
+feh --bg-fill $HOME/Pictures/.current_wallpaper
+compton --config $HOME/.config/compton/compton.conf
+udiskie -a &
+redshift &
