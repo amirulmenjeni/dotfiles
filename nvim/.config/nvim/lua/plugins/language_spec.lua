@@ -4,7 +4,11 @@ return {
         lazy = false,
         priority = 5000,
         config = function()
-	    require'lspconfig'.jedi_language_server.setup{}
+            require'lspconfig'.jedi_language_server.setup{}
+
+            vim.keymap.set('n', '<C-k>', vim.lsp.buf.hover, { desc = "Hover Documentation" })
+            vim.keymap.set('n', '<leader>gd', vim.lsp.buf.definition, { desc = "Goto Definition" })
+            vim.keymap.set('n', '<leader>rn', vim.lsp.buf.rename, { desc = "Rename Symbol" })
         end,
     },
     {
