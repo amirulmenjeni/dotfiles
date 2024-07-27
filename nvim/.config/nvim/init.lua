@@ -9,6 +9,7 @@ vim.o.smartindent = true
 vim.o.wrap = false
 vim.o.cursorline = true
 vim.o.termguicolors = true
+vim.o.colorcolumn = "121"
 
 vim.cmd('syntax enable')
 vim.cmd('filetype plugin indent on')
