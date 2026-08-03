@@ -410,6 +410,11 @@ do
     MiniIcons.mock_nvim_web_devicons()
   end
 
+  vim.pack.add { gh 'stevearc/oil.nvim' }
+  require('oil').setup()
+  vim.keymap.set('n', '<leader>e', '<cmd>Oil<CR>', { desc = 'Open file explorer' })
+  vim.keymap.set('n', '-', '<cmd>Oil ..<CR>', { desc = 'Open parent directory' })
+
   -- Better Around/Inside textobjects
   --
   -- Examples:
