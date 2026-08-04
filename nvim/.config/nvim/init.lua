@@ -88,6 +88,17 @@ P.S. You can delete this when you're done too. It's your config now! :)
 -- SECTION 1: OPTIONS
 -- Core Neovim settings, leaders, options
 -- ============================================================
+local is_container = vim.uv.fs_stat('/.dockerenv') ~= nil
+  or vim.env.REMOTE_CONTAINERS == 'true'
+  or vim.env.DEVCONTAINER == 'true'
+  or vim.env.CODESPACES == 'true'
+
+if is_container then
+  vim.g.clipboard = 'osc52'
+elseif vim.uv.os_uname().sysname == 'Darwin' then
+  vim.g.clipboard = 'pbcopy'
+end
+
 do
   -- Enable faster startup by caching compiled Lua modules
   vim.loader.enable()
@@ -211,6 +222,8 @@ do
 
   vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist, { desc = 'Open diagnostic [Q]uickfix list' })
 
+  vim.keymap.set({ 'n', 'v' }, 'k', 'gk', { desc = 'Move up by display line' })
+  vim.keymap.set({ 'n', 'v' }, 'j', 'gj', { desc = 'Move down by display line' })
   vim.keymap.set({ 'n', 'v' }, 'K', '10gk', { desc = 'Move up 10 display lines' })
   vim.keymap.set({ 'n', 'v' }, 'J', '10gj', { desc = 'Move down 10 display lines' })
 
